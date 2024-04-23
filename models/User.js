@@ -8,6 +8,10 @@ const userSchema = new Schema(
     img: {
       type: String,
     },
+    paidGigs:[{
+      type: Schema.Types.ObjectId,
+      ref: "Gig",
+    }] , 
     level: {
       type: String,
       default:0
@@ -31,11 +35,22 @@ const userSchema = new Schema(
       type: Array,
     },
    
-    wishlist:[String] , 
+    wishlist:[{
+      type: Schema.Types.ObjectId,
+      ref: "Gig",
+    }] , 
     gigs: [{
       type: Schema.Types.ObjectId,
       ref: "Gig",
     }],
+    serviceProvider:{
+      type: Boolean , 
+      default: false
+    } , 
+    services:{
+      type: [String] , 
+     default:[""]
+    } , 
     token:{
       type:String , 
       default:""
