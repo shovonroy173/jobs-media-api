@@ -47,7 +47,7 @@ export const login = async (req, res, next) => {
 export const addToWishlist = async(req , res , next)=>{
   try {
     const updateUser = await User.findByIdAndUpdate(req.userId , {
-      $addToSet:{"wishlist":req.body.productId}
+      $addToSet:{wishlist:req.params.id}
     } , {new:true});
     res.status(200).json(updateUser);
   } catch (error) {
@@ -60,6 +60,18 @@ export const getUser = async(req , res , next)=>{
   try {
     const user = await User.findById(req.params.id);
     res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getPaidGigs = async(req , res , next)=>{
+  try {
+    const gigs = await User.findById(req.params.id)
+    .populate("paidGigs")
+    .populate("wishlist")
+    .exec();
+    res.status(200).json(gigs);
   } catch (error) {
     next(error);
   }
